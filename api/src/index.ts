@@ -1,10 +1,10 @@
 import express from 'express';
-
+import productRoutes from './routes/products/index';
 const port = 3000;
 const app = express();
-app.get('/', (req, res) => {
-    res.send('Hello World 1234!');
-});
+
+app.use('/products', productRoutes);
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
