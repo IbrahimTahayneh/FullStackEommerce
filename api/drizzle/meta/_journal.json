@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1746154949971,
+      "tag": "0000_plain_kabuki",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1746156049253,
+      "tag": "0001_busy_starfox",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1746157229571,
+      "tag": "0002_gray_mariko_yashida",
+      "breakpoints": true
+    }
+  ]
+}
