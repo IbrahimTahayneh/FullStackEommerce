@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { db } from '../../db';
-import { productsTable } from '../../db/productSchema';
+import { productsTable, createProductSchema } from '../../db/productSchema';
 import { eq } from 'drizzle-orm';
+import _ from 'lodash';
+import { object } from 'zod';
 
 export async function getProducts(req: Request, res: Response) {
     try {
@@ -31,8 +33,12 @@ export async function getProductById(req: Request, res: Response) {
 }
 export async function createProduct(req: Request, res: Response) {
     try {
-        const [product] = await db.insert(productsTable).values(req.body).returning();
+        const [product] = await db.insert(productsTable)
+            .values(req.cleanBody)
+            .returning();
+
         res.status(201).json(product);
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -41,7 +47,7 @@ export async function createProduct(req: Request, res: Response) {
 export async function updateProduct(req: Request, res: Response) {
     try {
         const id = req.params.id;
-        const updateFields = req.body;
+        const updateFields = req.cleanBody;
         const [updateItem] = await db.update(productsTable).set(updateFields).where(eq(productsTable.id, id)).returning();
         if (!updateItem) {
             res.status(404).send({ message: 'Product not found' });

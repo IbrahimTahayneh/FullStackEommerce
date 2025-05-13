@@ -1,4 +1,5 @@
-import { doublePrecision, integer, uuid, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { doublePrecision, uuid, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
 
 export const productsTable = pgTable("products", {
     id: uuid().defaultRandom().primaryKey(),
@@ -8,3 +9,6 @@ export const productsTable = pgTable("products", {
     slug: varchar({ length: 255 }).notNull(),
     price: doublePrecision().notNull(),
 });
+
+export const createProductSchema = createInsertSchema(productsTable).omit({ id: true });
+export const updateProductSchema = createInsertSchema(productsTable).omit({ id: true }).partial();
